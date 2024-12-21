@@ -7,3 +7,4 @@
     # visualize the data 
 
 # create spending categories possible
+
