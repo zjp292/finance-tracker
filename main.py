@@ -10,9 +10,8 @@
 
 import pandas as pd
 import matplotlib.pyplot as plt
+from variables import income_keywords
 
-
-income_keywords = ['WELLS FARGO BANK PAYRLL', 'Aires', 'Zelle']
 
 def plotExpenses_barGraph(df):
     plt.figure(figsize=(10,6))

@@ -1,2 +1,6 @@
 # ignore the financial data files
 activity-csv-data/*
+
+# ignore env data
+.env
+variables.py
