@@ -37,6 +37,7 @@ def expenseTable_byMonth(df, month, year):
                        & (df['Details'] == 'DEBIT')
                        & ~df['Description'].str.contains('Transfer', case=True, na=False)]
     month_expense = month_expense.sort_values(by=['Amount'])
+
     #print(month_expense)
     return(month_expense)
 
@@ -51,6 +52,7 @@ def incomeTable_byMonth(df, month, year):
                       & (df['Details'] == 'CREDIT')
                       & ~df['Description'].str.contains('Transfer', case=True, na=False)]
     month_income = month_income.sort_values(by=['Amount'], ascending=False)
+
     #print(month_income)
     return(month_income)
 
@@ -60,11 +62,13 @@ def deltaAmount_byMonth(df, month, year):
         return
     
     month_expense = expenseTable_byMonth(df, month, year)
+
     month_income = incomeTable_byMonth(df, month, year)
+
+    delta_amount = month_income['Amount'].sum() + month_expense['Amount'].sum()
     
-    delta_amount = month_income['Amount'] + month_expense['Amount']
-    
-    print(delta_amount)
+    print(f"The difference in income and expenses is: {delta_amount}")
+    return delta_amount
 
 # read csv data into dataframe
 df = pd.read_csv('activity-csv-data/Chase2809_Activity_20241216.CSV')
@@ -80,11 +84,6 @@ df['Year'] = df['Posting Date'].dt.year
 df['Month'] = df['Posting Date'].dt.month
 
 #print(df)
-
-
-
-
-
 
 monthly_data = df.groupby(['Year' , 'Month']).agg({'Amount': 'sum'}).reset_index()
 
@@ -117,7 +116,7 @@ expenses['Year-Month'] = expenses['Year'].astype(str) + '-' + expenses_by_month[
 # print(expenses)
 # print(income)
 
-#plotExpenses_barGraph(expenses)
+plotExpenses_barGraph(expenses)
 # expenseTable_byMonth(df, 9, 2024)
 # incomeTable_byMonth(df, 9, 2024)
-deltaAmount_byMonth(df, 9, 2024)
+deltaAmount_byMonth(df, 6, 2024)
