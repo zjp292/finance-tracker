@@ -10,7 +10,17 @@
 
 import pandas as pd
 import matplotlib.pyplot as plt
+from sqlalchemy import create_engine
 from variables import income_keywords
+
+class SQLDatabaseHandler():
+    def __init__(self, server, database, username, password, driver="ODBC Driver 17 for SQL Server"):
+
+        self.connection_string = f"mssql+pyodbc://{username}:{password}@{server}/{database}?driver={driver}"
+
+        self.engine = create_engine(self.connection_string)
+        pass
+
 
 
 def plotExpenses_barGraph(df):
@@ -119,3 +129,6 @@ plotExpenses_barGraph(expenses)
 # expenseTable_byMonth(df, 9, 2024)
 # incomeTable_byMonth(df, 9, 2024)
 deltaAmount_byMonth(df, 6, 2024)
+
+
+
